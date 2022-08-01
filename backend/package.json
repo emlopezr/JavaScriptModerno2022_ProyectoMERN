@@ -1,0 +1,19 @@
+{
+  "name": "apv-backend",
+  "version": "1.0.0",
+  "description": "Aprendiendo JS FullStack",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopezemmanuel/JavaScriptModerno2022_ProyectoMERN.git"
+  },
+  "author": "lopezemmanuel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lopezemmanuel/JavaScriptModerno2022_ProyectoMERN/issues"
+  },
+  "homepage": "https://github.com/lopezemmanuel/JavaScriptModerno2022_ProyectoMERN#readme"
+}

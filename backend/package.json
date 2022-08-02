@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/lopezemmanuel/JavaScriptModerno2022_ProyectoMERN#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongoose": "^6.5.0"

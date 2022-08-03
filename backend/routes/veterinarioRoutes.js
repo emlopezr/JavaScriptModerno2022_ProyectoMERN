@@ -9,7 +9,9 @@ router.post('/', registrar);
 router.get('/confirmar/:token', confirmar); // Confirmación por medio del Token
 router.post('/login', autenticar);
 router.post('/restablecerpassword', restablecerPassword); // Si el usuario olvidó la contraseña
-router.route('/restablecerpassword/:token').get(comprobarTokenPass).post(nuevoPassword) // Usar el token del email para restablecer la contraseña
+router.route('/restablecerpassword/:token') // Usar el token del email para restablecer la contraseña
+    .get(comprobarTokenPass)
+    .post(nuevoPassword)
 
 // Rutas privadas -> Hay que estar logueado
 router.get('/perfil', checkAuth, perfil);

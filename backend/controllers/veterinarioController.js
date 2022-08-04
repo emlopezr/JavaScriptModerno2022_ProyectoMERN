@@ -1,10 +1,11 @@
 import Veterinario from "../models/Veterinario.js";
 import generarJWT from "../helpers/generarJWT.js";
 import generarId from "../helpers/generarID.js";
+import emailRegistro from "../helpers/emailRegistro.js";
 
 const registrar = async (req, res) => {
     // Prevenir emails duplicados
-    const { email } = req.body; // Datos de la petición POST
+    const { email, nombre } = req.body; // Datos de la petición POST
     const existeUsuario = await Veterinario.findOne({ email }); // Buscar si existe ese email en la BD
 
     if (existeUsuario) {
@@ -12,10 +13,14 @@ const registrar = async (req, res) => {
         return res.status(400).json({ msg: error.message });
     }
 
+
     try {
         // Guardar un nuevo veterinario en la BD
         const veterinario = new Veterinario(req.body); // Datos de la petición POST
         const veterinarioGuardado = await veterinario.save();
+
+        // Envíar el email de confirmación
+        emailRegistro(email, nombre, veterinarioGuardado.token);
 
         // Respuesta al API -> Creado correctamente
         res.json({ msg: 'Veterinario creado correctamente' });

@@ -1,6 +1,35 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import clienteAxios from "../config/axios"
+import Alerta from "../components/Alerta"
 
 const RestablecerPassword = () => {
+    // Satates
+    const [email, setEmail] = useState('');
+    const [alerta, setAlerta] = useState({});
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        // Validación de input vacío
+        if (email === '') {
+            setAlerta({ msg: 'El email es obligatorio', error: true });
+            return;
+        }
+
+        try {
+            // Petición POST
+            const { data } = await clienteAxios.post('veterinarios/restablecerpassword', { email })
+
+            setAlerta({ msg: data.msg, error: false });
+        } catch (error) {
+            setAlerta({ msg: error.response.data.msg, error: true });
+        }
+    }
+
+    // Verificar si hay una alerta
+    const { msg } = alerta;
+
     return (
         <>
             <div className="mb-5 md:mb-0">
@@ -8,10 +37,18 @@ const RestablecerPassword = () => {
             </div>
 
             <div className="border rounded-xl p-5 mt-16 md:mt-0 shadow-lg bg-white">
-                <form>
+                {
+                    // Verificar si hay una alerta
+                    msg &&
+                    <Alerta
+                        alerta={alerta}
+                    />
+                }
+
+                <form onSubmit={handleSubmit}>
                     <div className="mb-5">
                         <label htmlFor="email" className="uppercase text-gray-600 block text-xl font-bold">Email</label>
-                        <input type="email" placeholder="Tu email" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" name="email" />
+                        <input type="email" placeholder="Tu email" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" name="email" value={email} onChange={e => setEmail(e.target.value)} />
                     </div>
 
                     <input type="submit" value="Envíar correo" className="bg-indigo-700 w-full py-3 px-10 rounded-xl uppercase font-bold text-white mb-5 hover:cursor-pointer hover:bg-indigo-800 xl:w-auto " />

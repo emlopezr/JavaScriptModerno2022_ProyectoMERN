@@ -19,7 +19,7 @@ const agregarPaciente = async (req, res) => {
         const pacienteGuardado = await paciente.save()
 
         // Respuesta al API -> Creado correctamente
-        res.json({ msg: 'Paciente guardado correctamente' });
+        res.json(paciente);
     } catch (error) {
         const errorBD = new Error('Error al crear el paciente');
         res.status(400).json({ msg: errorBD.message, error });
@@ -43,7 +43,7 @@ const obtenerPaciente = async (req, res) => {
         return res.status(401).json({ msg: error.message, idPac, idReq, comp });
     }
 
-    res.status(200).json({ paciente });
+    res.status(200).json(paciente);
 }
 
 const actualizarPaciente = async (req, res) => {
@@ -74,7 +74,7 @@ const actualizarPaciente = async (req, res) => {
         const pacienteActualizado = await paciente.save();
 
         // Respuesta al API -> Actualizado correctamente
-        res.json({ msg: 'Paciente actualizado correctamente', pacienteActualizado });
+        res.json(pacienteActualizado);
     } catch (error) {
         const errorBD = new Error('Error al actualizar el paciente');
         return res.status(400).json({ msg: errorBD.message });

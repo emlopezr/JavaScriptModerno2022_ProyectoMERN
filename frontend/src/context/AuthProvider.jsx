@@ -45,10 +45,58 @@ const AuthProvider = ({ children }) => {
         setAuth({});
     }
 
+    const actualizarPerfil = async datos => {
+        // Obtener Token del LocalStorage y verificar si hay
+        const token = localStorage.getItem('apv_token');
+
+        if (!token) {
+            setCargando(false);
+            return;
+        };
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await clienteAxios.put(`/veterinarios/perfil/${datos._id}`, datos, config);
+            return ({ msg: 'Actualizado correctamente', error: false });
+        } catch (error) {
+            return ({ msg: error.response.data.msg, error: true });
+        }
+    }
+
+    const guardarPassword = async datos => {
+        // Obtener Token del LocalStorage y verificar si hay
+        const token = localStorage.getItem('apv_token');
+
+        if (!token) {
+            setCargando(false);
+            return;
+        };
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await clienteAxios.put('/veterinarios/actualizarpassword', datos, config);
+            return ({ msg: 'Contraseña actualizada correctamente', error: false });
+        } catch (error) {
+            return ({ msg: error.response.data.msg, error: true });
+        }
+    }
+
     return (
         <AuthContext.Provider
             value={{
-                auth, setAuth, cargando, cerrarSesion
+                auth, setAuth, cargando, cerrarSesion, actualizarPerfil, guardarPassword
             }}
         >
             {children}

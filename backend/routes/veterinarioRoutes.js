@@ -1,5 +1,5 @@
 import express from "express";
-import { registrar, perfil, confirmar, autenticar, restablecerPassword, comprobarTokenPass, nuevoPassword } from "../controllers/veterinarioController.js";
+import { registrar, perfil, confirmar, autenticar, restablecerPassword, comprobarTokenPass, nuevoPassword, actualizarPerfil, actualizarPassword } from "../controllers/veterinarioController.js";
 import checkAuth from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -15,5 +15,7 @@ router.route('/restablecerpassword/:token') // Usar el token del email para rest
 
 // Rutas privadas -> Hay que estar logueado
 router.get('/perfil', checkAuth, perfil);
+router.put('/perfil/:id', checkAuth, actualizarPerfil);
+router.put('/actualizarpassword', checkAuth, actualizarPassword);
 
 export default router;
